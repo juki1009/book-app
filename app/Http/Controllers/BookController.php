@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\BookRequest;
 
 class BookController extends Controller
 {
@@ -19,17 +19,9 @@ class BookController extends Controller
         return view('books.create');
     }
 
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'author'      => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'review'      => 'nullable|string',
-            'rating'      => 'nullable|integer|min:1|max:5',
-            'read_at'     => 'nullable|date',
-        ]);
-
+        $validated = $request->validated();
         $validated['user_id'] = Auth::id();
 
         Book::create($validated);
@@ -49,20 +41,11 @@ class BookController extends Controller
         return view('books.edit', compact('book'));
     }
 
-    public function update(Request $request, Book $book)
+    public function update(BookRequest $request, Book $book)
     {
         abort_if($book->user_id !== Auth::id(), 403);
 
-        $validated = $request->validate([
-            'title'       => 'required|string|max:255',
-            'author'      => 'nullable|string|max:255',
-            'description' => 'nullable|string',
-            'review'      => 'nullable|string',
-            'rating'      => 'nullable|integer|min:1|max:5',
-            'read_at'     => 'nullable|date',
-        ]);
-
-        $book->update($validated);
+        $book->update($request->validated());
 
         return redirect()->route('books.index')->with('success', '書籍を更新しました');
     }
