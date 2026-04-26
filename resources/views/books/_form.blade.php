@@ -2,12 +2,17 @@
     <div>
         <label class="block text-sm font-medium text-gray-700">タイトル <span class="text-red-500">*</span></label>
         <input type="text" name="title" value="{{ old('title', $book->title ?? '') }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm">
-        @error('title') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+        @error('title')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
 
     <div>
         <label class="block text-sm font-medium text-gray-700">著者</label>
         <input type="text" name="author" value="{{ old('author', $book->author ?? '') }}" class="mt-1 block w-full rounded border-gray-300 shadow-sm">
+        @error('author')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
 
     <div>
