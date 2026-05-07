@@ -8,4 +8,8 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '192.168.1.74',　// スマホ確認時は '192.168.1.74' に変更
+        port: 5173,
+    },
 });
