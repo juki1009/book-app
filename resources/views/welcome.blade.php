@@ -16,13 +16,13 @@
         <nav class="flex flex-col gap-5 md:gap-10">
             <a href="/" class="text-center">
                 <div class="flex justify-center">
-                    <img src="{{ asset('images/reading_cat_2.png') }}" alt="Bookshelf" class="w-60">
+                    <x-application-logo />
                 </div>
                 <div class="text-4xl font-serif">Bookshelf</div>
                 <div class="text-sm">- 読書記録 -</div>
             </a>
     
-            <div class="text-center border border-gray-700 rounded px-8 py-10 mx-4 sm:px-24 sm:mx-0">
+            <div class="text-center border border-white/30 rounded px-8 py-10 mx-4 sm:px-24 sm:mx-0">
                 <div class="text-2xl font-serif mb-5">ログイン</div>
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
