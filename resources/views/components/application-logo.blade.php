@@ -1,1 +1,1 @@
-<img src="{{ asset('images/reading_cat_2.png') }}" alt="Bookshelf" class="w-60">
+<img src="{{ asset('images/reading_cat_2.png') }}" alt="Bookshelf" {{ $attributes->merge(['class' => 'w-60']) }}>

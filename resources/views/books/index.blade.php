@@ -1,11 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            書籍一覧
-        </h2>
-    </x-slot>
-
-    <div class="py-12">
+    <div class="py-12 mx-10">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             @if (session('success'))
@@ -14,50 +8,80 @@
                 </div>
             @endif
 
-            <div class="mb-4 flex justify-end">
-                <a href="{{ route('books.create') }}" class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">
-                    ＋ 書籍を登録
-                </a>
+            <div class="mb-6 flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">書籍一覧</h1>
+                    <p class="text-sm text-gray-400 mt-1">あなたの登録した書籍一覧です</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-3 flex items-center text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+                            </svg>
+                        </span>
+                        <x-text-input type="text" placeholder="書籍名・著者名で検索" class="pl-9 pr-4 py-2 w-full sm:w-64 placeholder-gray-500 focus:outline-none focus:border-[#D8BF8F] text-white"
+                        />
+                    </div>
+                    <a href="{{ route('books.create') }}" class="bg-[#D8BF8F] text-black px-4 py-2 rounded text-base hover:opacity-80 transition duration-200">
+                        ＋ 書籍を登録
+                    </a>
+                </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
+            <div class="overflow-hidden">
+                <div class="">
                     @if ($books->isEmpty())
                         <p class="text-gray-500">まだ書籍が登録されていません。</p>
                     @else
-                        <table class="w-full text-left">
-                            <thead>
-                                <tr class="border-b">
-                                    <th class="py-2 px-4">タイトル</th>
-                                    <th class="py-2 px-4">著者</th>
-                                    <th class="py-2 px-4">評価</th>
-                                    <th class="py-2 px-4">読了日</th>
-                                    <th class="py-2 px-4">操作</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($books as $book)
-                                    <tr class="border-b hover:bg-gray-50">
-                                        <td class="py-2 px-4">
-                                            <a href="{{ route('books.show', $book) }}" class="text-blue-600 hover:underline">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            @foreach ($books as $book)
+                                <a href="{{ route('books.show', $book) }}"
+                                class="group flex bg-[#1a1a1a] border border-gray-800 rounded-lg overflow-hidden hover:border-[#D8BF8F] transition duration-200 p-6">
+
+                                    {{-- 表紙 --}}
+                                    <div class="w-20 shrink-0 bg-gray-800 flex items-center justify-center rounded">
+                                        {{-- TODO: あとからGoogle Books API連携 --}}
+                                        <span class="text-gray-600 text-xs">No Image</span>
+                                    </div>
+
+                                    {{-- 書籍情報 --}}
+                                    <div class="p-3 flex flex-col justify-between min-w-0">
+                                        <div>
+                                            <p class="text-white text-base line-clamp-2">
                                                 {{ $book->title }}
-                                            </a>
-                                        </td>
-                                        <td class="py-2 px-4">{{ $book->author ?? '－' }}</td>
-                                        <td class="py-2 px-4">{{ $book->rating ? str_repeat('★', $book->rating) : '－' }}</td>
-                                        <td class="py-2 px-4">{{ $book->read_at ?? '－' }}</td>
-                                        <td class="py-2 px-4 flex gap-2">
-                                            <a href="{{ route('books.edit', $book) }}" class="text-yellow-600 hover:underline">編集</a>
-                                            <form action="{{ route('books.destroy', $book) }}" method="POST" onsubmit="return confirm('削除しますか？')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-red-600 hover:underline">削除</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                            </p>
+                                            <p class="text-gray-500 text-sm mt-1 truncate">
+                                                {{ $book->author }}
+                                            </p>
+                                        </div>
+
+                                        <div>
+                                            {{-- 評価 --}}
+                                            <div class="mt-2 flex items-center gap-0.5">
+                                                @if ($book->rating)
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        <span class="{{ $i <= $book->rating ? 'text-[#D8BF8F]' : 'text-gray-700' }} text-sm">★</span>
+                                                    @endfor
+                                                @else
+                                                    <span class="text-gray-600 text-xs">未評価</span>
+                                                @endif
+                                            </div>
+
+                                            {{-- 登録日 --}}
+                                            <p class="text-gray-500 text-sm mt-1">
+                                                登録日：{{ $book->created_at->format('Y/m/d') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                        @if ($books->hasPages())
+                            <div class="mt-8 flex justify-center">
+                                {{ $books->links() }}
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>

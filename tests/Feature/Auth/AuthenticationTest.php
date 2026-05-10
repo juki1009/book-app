@@ -57,6 +57,6 @@ class AuthenticationTest extends TestCase
             'password' => 'password',
         ]);
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect(route('books.index', absolute: false));
     }
 }
