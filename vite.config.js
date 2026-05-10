@@ -9,7 +9,7 @@ export default defineConfig({
         }),
     ],
     server: {
-        host: '192.168.1.74',　// スマホ確認時は '192.168.1.74' に変更
+        host: 'localhost',　// スマホ確認時は '192.168.1.22' に変更
         port: 5173,
     },
 });
