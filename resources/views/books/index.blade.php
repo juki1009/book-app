@@ -77,6 +77,11 @@
                                 </a>
                             @endforeach
                         </div>
+                        @if ($books->hasPages())
+                            <div class="mt-8 flex justify-center">
+                                {{ $books->links() }}
+                            </div>
+                        @endif
                     @endif
                 </div>
             </div>
