@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 space-y-4">
                 <div><span class="font-bold">著者：</span>{{ $book->author ?? '－' }}</div>
                 <div><span class="font-bold">評価：</span>{{ $book->rating ? str_repeat('★', $book->rating) : '－' }}</div>
-                <div><span class="font-bold">読了日：</span>{{ $book->read_at ?? '－' }}</div>
+                <div><span class="font-bold">読了日：</span>{{ $book->read_at?->format('Y/m/d') ?? '－' }}</div>
                 <div>
                     <span class="font-bold">あらすじ：</span>
                     <p class="mt-1 text-gray-700">{{ $book->description ?? '－' }}</p>
