@@ -14,14 +14,14 @@
                     @method('PUT')
                     @include('books._form')
 
-                    <div class="mt-8 flex flex-col-reverse md:flex-row items-center justify-end gap-6">
+                    <div class="mt-8 flex items-center justify-end gap-6">
                         {{-- 削除ボタン（formタグの外にあるdelete-formとIDで紐付け） --}}
                         <button type="submit" form="delete-form" class="text-red-500 text-sm hover:underline">
                             この書籍を削除する
                         </button>
 
                         {{-- 更新ボタン --}}
-                        <button type="submit" class="w-full md:w-auto bg-[#D8BF8F] px-8 py-2 rounded hover:opacity-50 text-black">
+                        <button type="submit" class="w-30 md:w-auto bg-[#D8BF8F] px-5 py-2 rounded hover:opacity-50 text-black">
                             更新する
                         </button>
                     </div>

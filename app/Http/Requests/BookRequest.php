@@ -25,6 +25,7 @@ class BookRequest extends FormRequest
         return [
             'title'       => 'required|string|max:255',
             'author'      => 'nullable|string|max:255',
+            'thumbnail'   => 'nullable|url|max:2048',
             'description' => 'nullable|string',
             'review'      => 'nullable|string',
             'rating'      => 'nullable|integer|min:1|max:5',
