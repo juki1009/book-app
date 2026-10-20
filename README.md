@@ -35,11 +35,13 @@ git clone https://github.com/juki1009/book-app.git
 cd book-app
 cp .env.example .env
 docker compose up -d
-composer install
-php artisan key:generate
-php artisan migrate
-npm install
-npm run dev
+docker compose exec app composer install
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate --seed
+# データベースをリフレッシュして初期データを再投入する場合
+docker compose exec app php artisan migrate:fresh --seed
+docker compose exec app npm install
+docker compose exec app npm run dev
 ```
 
 ブラウザで `http://localhost` にアクセスしてください。
